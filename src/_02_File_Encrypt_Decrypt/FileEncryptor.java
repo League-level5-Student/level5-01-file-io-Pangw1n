@@ -35,7 +35,7 @@ public class FileEncryptor {
 		
 	}
 	
-	String decode(String input)
+	String encode(String input)
 	{
 		String encodedText;
 		return encodedText;
