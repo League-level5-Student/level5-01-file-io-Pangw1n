@@ -35,26 +35,29 @@ public class FileDecryptor {
 		try {
 			FileReader fr = new FileReader("src/_02_File_Encrypt_Decrypt/storage.txt");
 			String decodedText = "";
-			char c = (char) fr.read();
+			int c = fr.read();
 			while(c != -1){
 				System.out.print((char)c);
-				c = (char) fr.read();
-				char newLetter = c;
+				int newLetter = c;
 				if (c >= 65 && c <= 90)
 				{
-					newLetter += key;
-					newLetter = (char) (((newLetter - 65) % 26) + 65);
+					newLetter -= key;
+					newLetter = (char)(Math.floorMod(newLetter - 65, 26) + 65);
+					
 				}
 				else if (c >= 97 && c <= 122)
 				{
-					newLetter += key;
-					newLetter = (char) (((newLetter - 97) % 26) + 97);
+					newLetter -= key;
+					newLetter = (char)(Math.floorMod(newLetter - 97, 26) + 97);
 				}
-				decodedText += newLetter;
+				decodedText += (char)newLetter;
+				c = fr.read();
 			}
 			fr.close();
 			
 			System.out.println(decodedText);
+			
+			JOptionPane.showMessageDialog(null, decodedText);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
