@@ -132,18 +132,7 @@ public class ToDoList {
 		});
 		
 		saveButton.addActionListener((arg) -> {
-			try {
-				String name = JOptionPane.showInputDialog("Enter a name for this list");
-				FileWriter fw = new FileWriter("src/_03_To_Do_List/" + name + ".txt");
-				for (int i = 0; i < tasks.size(); i++)
-				{
-					fw.write((i != 0 ? "/" : "") + tasks.get(i));
-				}
-				fw.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			save();
 		});
 		
 		loadButton.addActionListener((arg) -> {
@@ -156,48 +145,50 @@ public class ToDoList {
 			
 			int returnVal = jfc.showOpenDialog(null);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				String fileName = jfc.getSelectedFile().getPath();
-				System.out.println(fileName);
-				
-				try {
-					FileReader fr = new FileReader(fileName);
-					
-					tasks.clear();
-					int i = fr.read();
-					String next = "";
-					while (i != -1)
-					{
-						if (i == 47)
-						{
-							tasks.add(next);
-							next = "";
-						}
-						else
-						{
-							next += (char)i;
-						}
-						i = fr.read();
-					}
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				load(jfc.getSelectedFile().getPath());
 			}
-			
-			
 		});
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
 		frame.setVisible(true);
 		frame.pack();
+		
+		openLastSave();
 	}
 
 	
 	
+	private void openLastSave() {
+		// TODO Auto-generated method stub
+		try {
+			FileReader fr = new FileReader("src/_03_To_Do_List/memory.txt");
+			int i = fr.read();
+			String fileName = "";
+			while (i != -1)
+			{
+				fileName += (char)i;
+				i = fr.read();
+			}
+			load(fileName);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return;
+		}
+	}
+	
+	private void saveLastOpened(String fileName)
+	{
+		try {
+			FileWriter fw = new FileWriter("src/_03_To_Do_List/memory.txt");
+			fw.write(fileName);
+			fw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private File getDirectoryOfCurrentClass() {
 		 try {
 	            // Get the location of the current class file (compiled class or JAR)
@@ -215,5 +206,57 @@ public class ToDoList {
 	            e.printStackTrace();
 	            return null; // Return null if something goes wrong
 	        }
+	}
+	
+	private void save()
+	{
+		try {
+			String name = JOptionPane.showInputDialog("Enter a name for this list");
+			FileWriter fw = new FileWriter("src/_03_To_Do_List/" + name + ".txt");
+			for (int i = 0; i < tasks.size(); i++)
+			{
+				fw.write(tasks.get(i) + "/");
+			}
+			fw.close();
+			saveLastOpened("src/_03_To_Do_List/" + name + ".txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private void load(String fileName)
+	{
+		
+		System.out.println(fileName);
+		
+		try {
+			FileReader fr = new FileReader(fileName);
+			
+			tasks.clear();
+			int i = fr.read();
+			String next = "";
+			while (i != -1)
+			{
+				if (i == 47)
+				{
+					tasks.add(next);
+					next = "";
+				}
+				else
+				{
+					next += (char)i;
+				}
+				i = fr.read();
+			}
+			
+			saveLastOpened(fileName);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }
