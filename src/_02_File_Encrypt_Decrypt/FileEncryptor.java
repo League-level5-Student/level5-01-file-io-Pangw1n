@@ -72,3 +72,5 @@ public class FileEncryptor {
 		return encodedText;
 	}
 }
+
+//Copyright © 2024 FirstName LastName

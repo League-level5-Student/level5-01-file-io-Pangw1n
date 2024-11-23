@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
  * Challenge: Complete the MinecraftCreeper class so that the test passes 
  * by making it implement the Serializable interface.
  */
-public class Serialization {
+public class Serialization{
 	private static final String DATA_FILE = "src/_05_Serialization/saved.dat";
 
 	@Test
@@ -65,3 +65,5 @@ public class Serialization {
 		}
 	}
 }
+
+//Copyright © 2024 FirstName LastName
