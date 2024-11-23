@@ -67,3 +67,5 @@ public class FileDecryptor {
 		}
 	}
 }
+
+//Copyright © 2024 FirstName LastName

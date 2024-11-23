@@ -45,3 +45,5 @@ public class FileRecorder {
 		}
 	}
 }
+
+//Copyright © 2024 FirstName LastName
