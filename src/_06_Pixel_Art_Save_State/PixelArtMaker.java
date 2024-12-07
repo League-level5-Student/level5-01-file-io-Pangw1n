@@ -1,5 +1,6 @@
 package _06_Pixel_Art_Save_State;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -90,7 +91,7 @@ public class PixelArtMaker implements MouseListener{
     
     
     
-    public void save(GridPanel data)
+    void save(GridPanel data)
     {
     	try (FileOutputStream fos = new FileOutputStream(new File(DATA_FILE)); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
 			oos.writeObject(data);
@@ -99,18 +100,18 @@ public class PixelArtMaker implements MouseListener{
 		}
     }
     
-    public void load()
+    void load()
     {
     	GridPanel grid = loadFile();
     	if (grid != null)
     	{
+    		window.getContentPane().removeAll();
+    		
     		gp = grid;
-            csp = new ColorSelectionPanel();
-            window.remove(gip);
-            window.remove(gp);
-            window.remove(csp);
-            window.add(gp);
-            window.add(csp);
+    		window.add(gp); 
+    		
+			csp = new ColorSelectionPanel();
+			window.add(csp);
             
             saveload = new JPanel();
             saveButton = new JButton("Save");
@@ -123,6 +124,7 @@ public class PixelArtMaker implements MouseListener{
             
             gp.repaint();
             gp.addMouseListener(this);
+            
             window.pack();
     	}
     	else

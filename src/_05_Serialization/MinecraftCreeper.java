@@ -11,6 +11,7 @@ public class MinecraftCreeper implements Serializable{
 	public int yPosition;
 	public int zPosition;
 	public double health;
+	
 
 	public MinecraftCreeper(String name, int x, int y, int z) {
 		this.name = name;

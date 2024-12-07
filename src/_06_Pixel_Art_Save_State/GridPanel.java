@@ -54,7 +54,7 @@ public class GridPanel extends JPanel implements Serializable{
     public void clickPixel(int mouseX, int mouseY) {
         // 5. Use the mouseX and mouseY variables to change the color
         //    of the pixel that was clicked. *HINT* Use the pixel's dimensions.
-    	Canvas[mouseX / 10][mouseY / 10].color = color;
+    	Canvas[mouseX / (windowWidth / rows)][mouseY / (windowWidth / cols)].color = color;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class GridPanel extends JPanel implements Serializable{
         	{
         		Pixel pixel = Canvas[i][j];
         		g.setColor(pixel.color);
-        		g.fillRect(pixel.x * 10, pixel.y * 10, 10, 10);
+        		g.fillRect(pixel.x * (windowWidth / rows), pixel.y * (windowWidth / cols), pixelWidth, pixelWidth);
         	}
         }
     }
